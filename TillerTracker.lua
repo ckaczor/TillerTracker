@@ -223,9 +223,9 @@ function TillerTracker:OnInitialize()
 end
 
 function TillerTracker:OnEnable()
-	-- Disable if the player is less than 90
-	if (UnitLevel("player") < 90) then
-		LDB.text = L["Disabled until level 90"]
+	-- Disable if the player is less than 10
+	if (UnitLevel("player") < 10) then
+		LDB.text = L["Disabled until level 10"]
 
 		-- Register to get player level events
 		self:RegisterEvent("PLAYER_LEVEL_UP")
@@ -244,7 +244,7 @@ function TillerTracker:OnEnable()
 end
 
 function TillerTracker:PLAYER_LEVEL_UP(event, newLevel)
-	if (tonumber(newLevel) >= 90) then
+	if (tonumber(newLevel) >= 10) then
 		-- Do the real enable
 		TillerTracker:OnEnableCore()
 
