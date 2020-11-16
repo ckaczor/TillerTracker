@@ -344,9 +344,10 @@ local function Entry_OnMouseUp(frame, info, button)
 			return
 		end	
 	
+		local m = TomTom:GetCurrentPlayerPosition()
 		local location = info["LOCATION"]
 	
-		_G.TomTom:AddMFWaypoint(807, nil, location[1] / 100, location[2] / 100, { title = info["NAME"] })
+		_G.TomTom:AddWaypoint(m, location[1] / 100, location[2] / 100, { title = info["NAME"] })
 	end
 end
 
