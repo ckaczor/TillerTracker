@@ -387,7 +387,7 @@ end
 
 function TillerTracker:UpdateData()
 	-- Get information on all quests completed
-	local questsCompleted = GetQuestsCompleted()
+	local questsCompleted = C_QuestLog.GetAllCompletedQuestIDs()
 
 	-- Create a table to store our current inventory of required mats	
 	local inv_table = {}
