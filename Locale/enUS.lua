@@ -34,7 +34,7 @@ L["Need"] = true
 
 L["Gather:"] = true
 L["Done"] = true
-L["Disabled until level 90"] = true
+L["Disabled until level 10"] = true
 
 L["Best Friends with everyone"] = true
 
