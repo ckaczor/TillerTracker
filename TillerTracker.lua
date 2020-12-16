@@ -363,6 +363,10 @@ local function SetSort(cell, sort)
 		private.db.global.sort_dir = "ASC"
 	end
 
+	if not private.loaded then
+		return
+	end
+
 	TillerTracker:UpdateData()
 	TillerTracker:UpdateTooltip()
 end
@@ -648,6 +652,10 @@ function LDB.OnEnter(self)
 end
 
 function TillerTracker:QUEST_LOG_UPDATE()
+	if not private.loaded then
+		return
+	end
+
 	TillerTracker:UpdateData()
 	TillerTracker:UpdateText()
 	
@@ -659,6 +667,10 @@ function TillerTracker:QUEST_LOG_UPDATE()
 end
 
 function TillerTracker:BAG_UPDATE()
+	if not private.loaded then
+		return
+	end
+
 	TillerTracker:UpdateData()
 	TillerTracker:UpdateText()
 
@@ -717,6 +729,10 @@ end
 
 function TillerTracker:SetPlanAhead(value)
 	private.db.global.plan_ahead = value
+
+	if not private.loaded then
+		return
+	end
 
 	TillerTracker:UpdateData()
 	TillerTracker:UpdateText()
