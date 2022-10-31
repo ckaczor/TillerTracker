@@ -373,7 +373,7 @@ end
 
 function TillerTracker:ReputationDone(reputationId)
 	-- Get the reputation information
-	local _, friendRep = GetFriendshipReputation(reputationId)
+	local friendRep = C_GossipInfo.GetFriendshipReputation(reputationId).standing
 
 	-- Done if over exalted
 	return (friendRep > 42000)
