@@ -197,9 +197,8 @@ function TillerTracker:OnInitialize()
 	private.pinned = false
 	private.need_index = 1
 	private.loaded = false
-	private.item_wait_table = {}
-	private.item_wait_count = 0
-	
+	private.item_name_table = {}
+
 	-- Get rid of settings from before AceDB
 	if TillerTrackerDB then
 		TillerTrackerDB["SORT_FIELD"] = nil
@@ -258,66 +257,56 @@ function TillerTracker:OnEnableCore()
 	TillerTracker:Print(L["Loading..."])
 	LDB.text = L["Loading..."]
 	
-	-- Register to get item info events for now
-	self:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-
-	-- Attempt to load the cache
+	-- Load item info from cache
 	TillerTracker:LoadCache()
-
-	-- If everything is cached we're good to go
-	if (private.item_wait_count == 0) then
-		TillerTracker:OnLoaded(self)
-	end
 end
 
 function TillerTracker:LoadCache()
+	local item_count = 0
+	local item_loaded_count = 0
+	local item_table = {}
+
+	private.item_name_table = {}
+
 	-- Loop over each quest in the data	
 	for _, quest_info in pairs(private.QUESTS) do 
 
 		-- Get the item ID of the food
 		local food_id = quest_info["FOOD_ID"]				
+		
+		-- Add the food to the list of items
+		item_table[food_id] = Item:CreateFromItemID(food_id)
+		item_count = item_count + 1
 
-		-- Try to get the info for the food
-		local food_name = GetItemInfo(food_id)
-		
-		-- If the information wasn't available add it to the list of waiting items
-		if (food_name == nil) then
-			private.item_wait_table[food_id] = true
-			private.item_wait_count = private.item_wait_count + 1
-		end
-		
 		-- Loop over the mats required to cook the food for the quest
 		for _, mat_data in pairs(quest_info["MATS"]) do 
 		
 			-- Get the item ID of the mat
 			local mat_id = mat_data["ITEM_ID"]				
 
-			-- Try to get the info for the mat
-			local mat_name = GetItemInfo(mat_id)
-
-			-- If the information wasn't available add it to the list of waiting items
-			if (mat_name == nil) then
-				if (private.item_wait_table[mat_id] == nil) then
-					private.item_wait_table[mat_id] = true
-					private.item_wait_count = private.item_wait_count + 1
-				end
+			-- Add the mat to the list of items
+			if (item_table[mat_id] == nil) then
+				item_table[mat_id] = Item:CreateFromItemID(mat_id)
+				item_count = item_count + 1	
 			end
 		end
 	end
-end
 
-function TillerTracker:GET_ITEM_INFO_RECEIVED()
-	for id, _ in pairs(private.item_wait_table) do
-		if GetItemInfo(id) then
-			private.item_wait_table[id] = nil
+	-- Loop over all items we need to cache
+	for _, item in pairs(item_table) do
+
+		-- Wait for the item to load
+		item:ContinueOnItemLoad(function()
 			
-			private.item_wait_count = private.item_wait_count - 1
-		end
-	end
-	
-	-- If everything is cached we're good to go
-	if (private.item_wait_count == 0) then
-		TillerTracker:OnLoaded(self)
+			-- Save the name
+			private.item_name_table[item:GetItemID()] = item:GetItemName()
+			item_loaded_count = item_loaded_count + 1
+
+			-- If everything is cached we're good to go
+			if (item_count == item_loaded_count) then
+				TillerTracker:OnLoaded(self)
+			end	
+		end)		
 	end
 end
 
@@ -326,9 +315,6 @@ function TillerTracker:OnLoaded(self)
 	TillerTracker:Print(L["Loaded"])
 	LDB.text = L["Loaded"]
 		
-	-- Done with item info events
-	self:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
-
 	self:RegisterEvent("QUEST_LOG_UPDATE")
 	self:RegisterEvent("BAG_UPDATE")
 	
@@ -431,7 +417,7 @@ function TillerTracker:UpdateData()
 			local food_id = quest_info["FOOD_ID"]
 
 			-- Get the name of the food for display
-			local food_name = GetItemInfo(food_id)
+			local food_name = private.item_name_table[food_id]
 
 			-- Get how many of the food we have in our bags
 			local food_count = GetItemCount(food_id, true, false)
@@ -492,7 +478,7 @@ function TillerTracker:UpdateData()
 					if (mat_count > 0) then
 
 						-- Get the name of the mat					
-						local mat_name = GetItemInfo(mat_id)
+						local mat_name = private.item_name_table[mat_id]
 
 						-- Set the mat need string to the count needed and the name
 						local mat_need = mat_count .. " " .. mat_name
@@ -631,7 +617,7 @@ function TillerTracker:UpdateText()
 	-- Loop over the need table
 	for need_id, need_count in pairs(private.need_table) do
 		if need_index == private.need_index then
-			LDB.text = L["Gather:"] .. " " .. need_count .. " " .. GetItemInfo(need_id)
+			LDB.text = L["Gather:"] .. " " .. need_count .. " " .. private.item_name_table[need_id]
 			
 			return
 		end
