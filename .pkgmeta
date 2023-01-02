@@ -8,8 +8,7 @@ externals:
         url: https://repos.wowace.com/wow/ace3/trunk/CallbackHandler-1.0
         tag: latest     
     Libs/LibQTip-1.0:
-        url: https://repos.wowace.com/wow/libqtip-1-0
-        tag: latest
+        url: https://repos.curseforge.com/wow/libqtip-1-0
     Libs/LibDataBroker-1.1:
         url: https://github.com/tekkub/libdatabroker-1-1
         tag: latest
@@ -40,3 +39,5 @@ externals:
     Libs/LibDBIcon-1.0:
         url: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
         tag: latest
+
+enable-nolib-creation: no
