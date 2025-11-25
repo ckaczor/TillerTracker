@@ -9,7 +9,8 @@ private.QUESTS = {
 		LOCATION = { 34.4, 46.8 }, 
 		MATS = { { COUNT = 1, ITEM_ID = 74864 }, { COUNT = 1, ITEM_ID = 74839 } },
 		REP_ID = 1277,
-		RECIPE_ID = 104302
+		RECIPE_ID = 104302,
+		COMPLETED = false
 	},	
 	[30386] = { 
 		NAME = L["A Dish for Ella"], 			
@@ -17,7 +18,8 @@ private.QUESTS = {
 		LOCATION = { 31.6, 58.0 }, 
 		MATS = { { COUNT = 1, ITEM_ID = 74857 } },
 		REP_ID = 1275,
-		RECIPE_ID = 104307
+		RECIPE_ID = 104307,
+		COMPLETED = false
 	},
 	[30421] = { 
 		NAME = L["A Dish for Farmer Fung"], 	
@@ -25,7 +27,8 @@ private.QUESTS = {
 		LOCATION = { 48.2, 33.8 }, 
 		MATS = { { COUNT = 1, ITEM_ID = 74839 } },
 		REP_ID = 1283,
-		RECIPE_ID = 104310
+		RECIPE_ID = 104310,
+		COMPLETED = false
 	},
 	[30427] = { 
 		NAME = L["A Dish for Fish"], 			
@@ -33,7 +36,8 @@ private.QUESTS = {
 		LOCATION = { 41.6, 30.0 }, 
 		MATS = { { COUNT = 2, ITEM_ID = 74865 } },
 		REP_ID = 1282,
-		RECIPE_ID = 104311
+		RECIPE_ID = 104311,
+		COMPLETED = false
 	},
 	[30390] = { 
 		NAME = L["A Dish for Gina"], 			
@@ -41,7 +45,8 @@ private.QUESTS = {
 		LOCATION = { 53.2, 51.6 }, 
 		MATS = { { COUNT = 1, ITEM_ID = 74856 } },
 		REP_ID = 1281,
-		RECIPE_ID = 104304
+		RECIPE_ID = 104304,
+		COMPLETED = false
 	},
 	[30414] = { 
 		NAME = L["A Dish for Haohan"], 			
@@ -49,7 +54,8 @@ private.QUESTS = {
 		LOCATION = { 44.6, 34.0 }, 
 		MATS = { { COUNT = 1, ITEM_ID = 74833 } },
 		REP_ID = 1279,
-		RECIPE_ID = 104298
+		RECIPE_ID = 104298,
+		COMPLETED = false
 	},
 	[30439] = { 
 		NAME = L["A Dish for Jogu"], 			
@@ -57,7 +63,8 @@ private.QUESTS = {
 		LOCATION = { 53.6, 52.4 }, 
 		MATS = { { COUNT = 2, ITEM_ID = 74841 } },
 		REP_ID = 1273,
-		RECIPE_ID = 104301
+		RECIPE_ID = 104301,
+		COMPLETED = false
 	},
 	[30396] = { 
 		NAME = L["A Dish for Old Hillpaw"], 	
@@ -65,7 +72,8 @@ private.QUESTS = {
 		LOCATION = { 31.0, 53.0 }, 
 		MATS = { { COUNT = 1, ITEM_ID = 74837 }, { COUNT = 5, ITEM_ID = 74841 } },
 		REP_ID = 1276,
-		RECIPE_ID = 104305
+		RECIPE_ID = 104305,
+		COMPLETED = false
 	},
 	[30408] = { 
 		NAME = L["A Dish for Sho"], 			
@@ -73,7 +81,8 @@ private.QUESTS = {
 		LOCATION = { 29.6, 30.6 }, 
 		MATS = { { COUNT = 1, ITEM_ID = 74856 }, { COUNT = 5, ITEM_ID = 74848 } },
 		REP_ID = 1278,
-		RECIPE_ID = 104299
+		RECIPE_ID = 104299,
+		COMPLETED = false
 	},
 	[30433] = { 
 		NAME = L["A Dish for Tina"], 			
@@ -81,6 +90,7 @@ private.QUESTS = {
 		LOCATION = { 45.0, 33.8 }, 
 		MATS = { { COUNT = 1, ITEM_ID = 74859 }, { COUNT = 5, ITEM_ID = 74843 } },
 		REP_ID = 1280,
-		RECIPE_ID = 104308		
+		RECIPE_ID = 104308,
+		COMPLETED = false
 	}
 }	

@@ -362,7 +362,7 @@ function TillerTracker:ReputationDone(reputationId)
 	local friendRep = C_GossipInfo.GetFriendshipReputation(reputationId).standing
 
 	-- Done if over exalted
-	return (friendRep > 42000)
+	return (friendRep >= 42000)
 end
 
 function TillerTracker:AllReputationsDone()
@@ -388,6 +388,9 @@ function TillerTracker:UpdateData()
 	
 	-- Loop over each quest in the data	
 	for _, quest_info in pairs(private.QUESTS) do 
+
+		-- Reset completed to false
+		quest_info["COMPLETED"] = false
 		
 		-- Loop over the mats required to cook the food for the quest
 		for _, mat_data in pairs(quest_info["MATS"]) do 
@@ -401,6 +404,15 @@ function TillerTracker:UpdateData()
 			-- Add the count to the inventory table (in case of multiples this will just replace what is there)			
 			inv_table[mat_id] = have_count
 		end		
+	end
+
+	-- Loop over each quest completed
+	for _, quest_id in pairs(questsCompleted) do
+
+		-- Set completed to true if it is one we're tracking
+		if (private.QUESTS[quest_id]) then
+			private.QUESTS[quest_id]["COMPLETED"] = true
+		end
 	end
 
 	-- Create a table to hold the information to display for each quest
@@ -434,7 +446,7 @@ function TillerTracker:UpdateData()
 			local quest_status = ""
 			local can_craft = 0
 
-			if (questsCompleted[quest_id]) then
+			if (quest_info["COMPLETED"]) then
 				-- Quest has already been completed today
 				quest_status = L["|cFF00FF00Complete|r"]
 			else
