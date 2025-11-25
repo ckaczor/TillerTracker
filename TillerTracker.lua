@@ -330,10 +330,9 @@ local function Entry_OnMouseUp(frame, info, button)
 			return
 		end	
 	
-		local m = TomTom:GetCurrentPlayerPosition()
 		local location = info["LOCATION"]
 	
-		_G.TomTom:AddWaypoint(m, location[1] / 100, location[2] / 100, { title = info["NAME"] })
+		_G.TomTom:AddWaypoint(376, location[1] / 100, location[2] / 100, { title = info["NAME"] })
 	end
 end
 
@@ -714,7 +713,12 @@ function TillerTracker:ChatCommand(input)
 	command = command:lower()
 
 	if command == L["config"]:lower() then
-		InterfaceOptionsFrame_OpenToCategory(private.optionsFrame)
+		if Settings then
+			Settings.OpenToCategory("Tiller Tracker")
+		elseif InterfaceOptionsFrame_OpenToCategory then
+			InterfaceOptionsFrame_OpenToCategory("Tiller Tracker")
+			InterfaceOptionsFrame_OpenToCategory("Tiller Tracker")
+		end				
 	elseif command == L["minimap"]:lower() then
 		private.db.global.minimap_icon.hide = not private.db.global.minimap_icon.hide
 		TillerTracker:UpdateMinimapConfig()
