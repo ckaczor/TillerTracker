@@ -326,13 +326,16 @@ end
 
 local function Entry_OnMouseUp(frame, info, button)
 	if button == "LeftButton" then
-		if not _G.TomTom then
-			return
-		end	
-	
 		local location = info["LOCATION"]
-	
-		_G.TomTom:AddWaypoint(376, location[1] / 100, location[2] / 100, { title = info["NAME"] })
+
+		if _G.TomTom then
+			_G.TomTom:AddWaypoint(376, location[1] / 100, location[2] / 100, { title = info["NAME"] })
+		elseif C_Map.CanSetUserWaypointOnMap then
+			if C_Map.CanSetUserWaypointOnMap(376) then
+				local mapPoint = UiMapPoint.CreateFromCoordinates(376, location[1] / 100, location[2] / 100)
+				C_Map.SetUserWaypoint(mapPoint)
+			end
+		end
 	end
 end
 
@@ -598,8 +601,8 @@ function TillerTracker:UpdateTooltip()
 		-- Add the line with info about the current quest
 		line = private.tooltip:AddLine(quest["NAME_DISPLAY"], quest["FOOD_DISPLAY"], quest["AMOUNT_DISPLAY"], quest["STATUS"], quest["NEED"])
 
-		-- If TomTom is installed then set the line script
-		if _G.TomTom then	
+		-- Set the line script if TomTom is installed or the game supports waypoints
+		if C_Map.CanSetUserWaypointOnMap or _G.TomTom then	
 			private.tooltip:SetLineScript(line, "OnMouseUp", Entry_OnMouseUp, { NAME = quest["NAME"], LOCATION = quest["LOCATION"] })
 		end
 	end				
@@ -613,10 +616,10 @@ function TillerTracker:UpdateTooltip()
 	line = private.tooltip:AddLine()
 	private.tooltip:SetCell(line, 1, L["|cFFFFFF00Right Click|r the main button to cycle through which ingredient to track"], "LEFT", private.tooltip:GetColumnCount())
 
-	-- If TomTom is installed then add a hint to the end
-	if _G.TomTom then		
+	-- Add a hint to the end if TomTom is installed or the game supports waypoints
+	if C_Map.CanSetUserWaypointOnMap or _G.TomTom then		
 		line = private.tooltip:AddLine()
-		private.tooltip:SetCell(line, 1, L["|cFFFFFF00Click|r a quest in the tooltip to set a TomTom waypoint at the farmer's home"], "LEFT", private.tooltip:GetColumnCount())
+		private.tooltip:SetCell(line, 1, L["|cFFFFFF00Click|r a quest in the tooltip to set a waypoint at the farmer's home"], "LEFT", private.tooltip:GetColumnCount())
 	end
 	
 	-- Add the Skillet hint if installed

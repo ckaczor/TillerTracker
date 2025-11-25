@@ -20,7 +20,7 @@ L["A Dish for Tina"] = true
 
 L["|cFF00FF00Complete|r"] = true
 L["|cFFFF0000Not Complete|r"] = true
-L["|cFFFFFF00Click|r a quest in the tooltip to set a TomTom waypoint at the farmer's home"] = true
+L["|cFFFFFF00Click|r a quest in the tooltip to set a waypoint at the farmer's home"] = true
 L["|cFFFFFF00Click|r the main button to toggle whether the tooltip stays open"] = true 
 L["|cFFFFFF00Right Click|r the main button to cycle through which ingredient to track"] = true
 L["|cFFFFFF00Ctrl-Click|r the main button to queue craftable foods in Skillet"] = true
