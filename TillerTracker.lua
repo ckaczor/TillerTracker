@@ -375,9 +375,25 @@ function TillerTracker:AllReputationsDone()
 	return true
 end
 
+function TillerTracker:GetAllCompletedQuestIDs()
+	if C_QuestLog.GetAllCompletedQuestIDs then
+		return C_QuestLog.GetAllCompletedQuestIDs()
+	elseif GetQuestsCompleted then
+		local completedQuestIds = {}
+
+		local questsCompleted = GetQuestsCompleted()
+
+		for quest_id in pairs(questsCompleted) do
+			table.insert(completedQuestIds, quest_id)
+		end
+
+		return completedQuestIds
+	end
+end
+
 function TillerTracker:UpdateData()
 	-- Get information on all quests completed
-	local questsCompleted = C_QuestLog.GetAllCompletedQuestIDs()
+	local questsCompleted = TillerTracker:GetAllCompletedQuestIDs()
 
 	-- Create a table to store our current inventory of required mats	
 	local inv_table = {}
